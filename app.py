@@ -116,7 +116,7 @@ def search_title_page(title):
 
 if __name__ == "__main__":
     db.init_app(app)
-    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://{}:{}@{}/test".format(str(os.environ.get("DATA_USER_NAME")), str(os.environ.get("DATA_BASE_PASSWORD")),str(os.environ.get("DATA_BASE_HOSTID")))
+    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://{}:{}@{}/{}".format(str(os.environ.get("DATA_USER_NAME")), str(os.environ.get("DATA_BASE_PASSWORD")),str(os.environ.get("DATA_BASE_HOSTID")),str(os.environ.get("DATA_BASE_NAME")))
     with app.app_context():
         db.create_all()
     app.run(debug=True)
