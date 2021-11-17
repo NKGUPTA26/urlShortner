@@ -6,9 +6,7 @@ class Url(db.Model):
     original_url = db.Column(db.String(500),nullable = False)
     short_url = db.Column(db.String(500), nullable=False)
     total_clicks = db.Column(db.Integer, nullable=True, default=0)
-    # meta_title = db.Column(db.Text, nullable = True)
-    meta = db.Column(db.Text, nullable = True)
-    datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    datetime = db.Column(db.DateTime, nullable=False, default=datetime.now())
     clicks = db.relationship("Clicks",backref = 'url',lazy=True)
     
     def __repr__(self):
