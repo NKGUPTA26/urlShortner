@@ -64,8 +64,19 @@ def url_redirect(id):
         response = {"success": True}
         return redirect(original_url)
     else:
-        flash('Invalid URL')
-        return redirect(url_for('index'))
+        response = {"message":"shotrned endpoint not added","status":False}
+        return responseSender(response)
+@app.route('/search/<title>', methods=["GET"])
+def search_title_page(title):
+    if title:
+        data = Url.query.all()
+        print(data)
+        response = {"message":"shotrned endpoint not added","status":False}
+        return responseSender(response)
+
+
+
+
 
 
 if __name__ == "__main__":
