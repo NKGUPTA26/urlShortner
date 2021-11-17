@@ -4,7 +4,7 @@ from database import db
 class Url(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     original_url = db.Column(db.String(500),nullable = False)
-    short_url = db.Column(db.String(500), nullable=False)
+    short_url = db.Column(db.String(500), nullable=True)
     total_clicks = db.Column(db.Integer, nullable=True, default=0)
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.now())
     clicks = db.relationship("Clicks",backref = 'url',lazy=True)
