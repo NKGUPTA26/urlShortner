@@ -26,26 +26,29 @@ def responseSender(response):
 
 @app.route('/', methods=['POST'])
 def index():
-
-    if request.method == 'POST':
-        url = request.form['url']
-        if not url:
-            response = {"success": False,"message":"URL is not provided"}
-            return responseSender(response), 400
-        response = requests.get(url)
-        url_data = Url(original_url=url)
-        db.session.add(url_data)
-        db.session.commit()
-        click = Clicks(url_id=url_data.id, url_click_at_time=1)
-        db.session.add(click)
-        url_id = url_data.id
-        hashid = hashids.encode(url_id)
-        short_url = request.host_url + hashid
-        url_details = Url.query.filter_by(id=url_id).first()
-        url_details.short_url = short_url
-        db.session.commit()
-        response = {"success": True, "short_url":short_url}
-        return responseSender(response)
+    try:
+        if request.method == 'POST':
+            url = request.form['url']
+            if not url:
+                response = {"success": False,"message":"URL is not provided"}
+                return responseSender(response), 400
+            response = requests.get(url)
+            url_data = Url(original_url=url)
+            db.session.add(url_data)
+            db.session.commit()
+            click = Clicks(url_id=url_data.id, url_click_at_time=1)
+            db.session.add(click)
+            url_id = url_data.id
+            hashid = hashids.encode(url_id)
+            short_url = request.host_url + hashid
+            url_details = Url.query.filter_by(id=url_id).first()
+            url_details.short_url = short_url
+            db.session.commit()
+            response = {"success": True, "short_url":short_url}
+            return responseSender(response)
+    except:
+        response = {"message": "something went wrong", "status": False}
+        return responseSender(response),500
 
 @app.route('/<id>',methods = ["GET"])
 def url_redirect(id):
